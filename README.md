@@ -1,2 +1,1 @@
-# m10-json-webstorage
-localstorage/webstorage/JSON
+# localstorage/webstorage/JSON
