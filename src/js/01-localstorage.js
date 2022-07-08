@@ -198,3 +198,36 @@ import '../css/common.css';
 // console.log(greetUserMango(user.greetUser.bind(user2)));
 
 // --------------------------------
+
+// (function () {})();
+
+// console.log(console);
+
+// const add = function (a, b) {
+//   return a + b;
+// };
+
+// console.dir(Function);
+
+// console.log(Window.console);
+
+// --------------------------------
+
+function makeInvertedString(string) {
+  const splitedString = string.split('');
+  let invertedString = '';
+  for (const letter of splitedString) {
+    const isLetterInLowerCase = letter === letter.toLowerCase();
+
+    invertedString += isLetterInLowerCase
+      ? letter.toUpperCase()
+      : letter.toLowerCase();
+  }
+
+  return invertedString;
+}
+
+console.log(makeInvertedString('abBahAAbbr'));
+console.log(makeInvertedString('manGOO'));
+
+// --------------------------------
