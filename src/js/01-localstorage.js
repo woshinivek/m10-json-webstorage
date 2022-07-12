@@ -21,14 +21,23 @@ const nissan = new Car({
   price: 19099,
 });
 
-console.log(nissan);
+// console.log(nissan);
 
-const toyota = vehicles
-  .filter(el => el.make === 'Toyota')
-  .map(el => new Car(el));
+// const toyota = vehicles
+//   .filter(el => el.make === 'Toyota')
+//   .map(el => new Car(el));
+// console.log(toyota);
 
-console.log(toyota);
+// const ford = vehicles.filter(el => el.make === 'Ford').map(el => new Car(el));
+// console.log(ford);
 
-const ford = vehicles.filter(el => el.make === 'Ford').map(el => new Car(el));
+// const fordString = JSON.stringify(ford);
 
-console.log(ford);
+//-------------------------------------------------------------------
+
+localStorage.setItem('car', JSON.stringify(nissan));
+
+const parsedCar = JSON.parse(localStorage.getItem('car'));
+console.log(parsedCar);
+
+//-------------------------------------------------------------------
