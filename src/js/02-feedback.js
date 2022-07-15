@@ -2,7 +2,10 @@ import debounce from 'lodash.debounce';
 import '../css/common.css';
 import '../css/feedback-form.css';
 
-// const STORAGE_KEY = 'feedback';
+// --------------------------------------------------------
+// --------------------------------------------------------
+
+// const FEEDBACK_MESSAGE = 'feedBackMessage';
 
 // const refs = {
 //   form: document.querySelector('.js-feedback-form'),
@@ -10,62 +13,72 @@ import '../css/feedback-form.css';
 // };
 
 // refs.form.addEventListener('submit', onFormSubmit);
-// // refs.textArea.addEventListener('input', onTextAreaInput);
-// refs.textArea.addEventListener('input', debounce(onTextAreaInput, 300));
+// refs.textArea.addEventListener('input', debounce(onTextAreaInput, 500));
 
 // populateMessageOutput();
 
 // function onFormSubmit(evt) {
 //   evt.preventDefault();
+
+//   localStorage.removeItem(FEEDBACK_MESSAGE);
 //   evt.currentTarget.reset();
-//   localStorage.removeItem(STORAGE_KEY);
 // }
 
 // function onTextAreaInput(evt) {
+//   console.log('onTextAreaInput ~ currentTarget', evt.currentTarget);
+
+//   console.log('onTextAreaInput ~ target', evt.target);
 //   const message = evt.target.value;
 
-//   localStorage.setItem(STORAGE_KEY, message);
+//   localStorage.setItem(FEEDBACK_MESSAGE, message);
 // }
 
-// function populateMessageOutput() {
-//   const savedMessage = localStorage.getItem(STORAGE_KEY);
+// function populateMessageOutput(evt) {
+//   const feedBackTempMessage = localStorage.getItem(FEEDBACK_MESSAGE);
 
-//   if (savedMessage) {
-//     refs.textArea.value = savedMessage;
+//   if (feedBackTempMessage) {
+//     refs.textArea.value = feedBackTempMessage;
 //   }
 // }
 
 // --------------------------------------------------------
 // --------------------------------------------------------
 
-const FEEDBACK_MESSAGE = 'feedBackMessage';
+const FORM_DATA = {};
 
 const refs = {
   form: document.querySelector('.js-feedback-form'),
+  inputName: document.querySelector('.js-feedback-form input'),
   textArea: document.querySelector('.js-feedback-form textarea'),
 };
 
 refs.form.addEventListener('submit', onFormSubmit);
-refs.textArea.addEventListener('input', onTextAreaInput);
+refs.form.addEventListener('input', debounce(onInputsChange, 200));
 
 populateMessageOutput();
 
+function onInputsChange(evt) {
+  FORM_DATA[evt.target.name] = evt.target.value;
+  localStorage.setItem('messageData', JSON.stringify(FORM_DATA));
+
+  console.log(FORM_DATA);
+}
+
 function onFormSubmit(evt) {
   evt.preventDefault();
-  localStorage.clear();
+
+  localStorage.removeItem('messageData');
   evt.currentTarget.reset();
 }
 
-function onTextAreaInput(evt) {
-  const message = evt.currentTarget.value;
-
-  localStorage.setItem(FEEDBACK_MESSAGE, message);
-}
-
 function populateMessageOutput(evt) {
-  const feedBackTempMessage = localStorage.getItem(FEEDBACK_MESSAGE);
+  const parsedFormData = JSON.parse(localStorage.getItem('messageData'));
 
-  if (feedBackTempMessage) {
-    refs.textArea.value = feedBackTempMessage;
+  if (parsedFormData) {
+    refs.inputName.value = parsedFormData.name;
+    refs.textArea.value = parsedFormData.message;
   }
 }
+
+// --------------------------------------------------------
+// --------------------------------------------------------
